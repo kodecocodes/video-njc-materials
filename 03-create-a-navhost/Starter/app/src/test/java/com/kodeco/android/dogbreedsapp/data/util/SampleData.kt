@@ -31,20 +31,72 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-package com.kodeco.android.dogbreedsapp.presentation.view.screens
 
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Scaffold
-import androidx.compose.runtime.Composable
-import androidx.navigation.compose.rememberNavController
+package com.kodeco.android.dogbreedsapp.data.util
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun MainScreen() {
-  val navController = rememberNavController()
-  Scaffold(
-    bottomBar = {{/*TODO: Add bottom navigation bar]*/}}
-  ) { paddingValues->
-    // TODO: Call BreedsNavHost composable
-  }
-}
+import com.kodeco.android.dogbreedsapp.data.local.model.BreedEntity
+import com.kodeco.android.dogbreedsapp.data.local.model.toBreed
+import com.kodeco.android.dogbreedsapp.data.network.model.BreedNetworkResponseItem
+import com.kodeco.android.dogbreedsapp.data.network.model.Image
+
+val breedNetworkResponse = BreedNetworkResponseItem(
+  bred_for = "Small rodent hunting, lapdog",
+  breed_group = "Tay",
+  name = "Affenpinscher",
+  life_span = "10 - 12 years",
+  image = Image(
+    id = "BJa4kxc4X",
+    height = 1600,
+    width = 1199,
+    url = "https://cdn2.thedogapi.com/images/BJa4kxc4X.jpg"
+  ),
+  origin = "Germany, France",
+  reference_image_id = "BJa4kxc4X",
+  temperament = "Stubborn, Curious, Playful, Adventurous, Active, Fun-loving",
+  weight = null,
+  height = null,
+  id = 1,
+  country_code = null,
+  description = null,
+  history = null,
+)
+val breedEntity = BreedEntity(
+  name = "Affenpinscher",
+  temperament = "Stubborn, Curious, Playful, Adventurous, Active, Fun-loving",
+  origin = "Germany, France",
+  imageUrl = "https://cdn2.thedogapi.com/images/BJa4kxc4X.jpg",
+  isLiked = false,
+  isDisliked = false
+)
+
+val breed = breedEntity.toBreed()
+
+val breedsList = listOf(
+  breed,
+  breed,
+  breed,
+  breed
+)
+
+
+
+val breedsResponseList = listOf(
+  breedNetworkResponse,
+  breedNetworkResponse,
+  breedNetworkResponse,
+  breedNetworkResponse,
+  breedNetworkResponse,
+  breedNetworkResponse,
+  breedNetworkResponse
+)
+
+
+val breedEntityList = listOf(
+  breedEntity,
+  breedEntity,
+  breedEntity,
+  breedEntity,
+  breedEntity
+)
+
+var testBreedsList  = emptyList<BreedEntity>()

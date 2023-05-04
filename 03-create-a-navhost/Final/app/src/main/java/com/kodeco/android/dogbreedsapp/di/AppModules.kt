@@ -31,20 +31,44 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-package com.kodeco.android.dogbreedsapp.presentation.view.screens
 
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Scaffold
-import androidx.compose.runtime.Composable
-import androidx.navigation.compose.rememberNavController
+package com.kodeco.android.dogbreedsapp.di
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun MainScreen() {
-  val navController = rememberNavController()
-  Scaffold(
-    bottomBar = {{/*TODO: Add bottom navigation bar]*/}}
-  ) { paddingValues->
-    // TODO: Call BreedsNavHost composable
+import androidx.room.Room
+import com.kodeco.android.dogbreedsapp.data.local.DogsDatabase
+import com.kodeco.android.dogbreedsapp.data.network.provideBreedsApi
+import com.kodeco.android.dogbreedsapp.data.network.provideOkHttpClient
+import com.kodeco.android.dogbreedsapp.data.network.provideRetrofit
+import com.kodeco.android.dogbreedsapp.data.repository.BreedRepositoryImpl
+import com.kodeco.android.dogbreedsapp.domain.repository.BreedRepository
+import com.kodeco.android.dogbreedsapp.presentation.viewModel.BreedDetailViewModel
+import com.kodeco.android.dogbreedsapp.presentation.viewModel.BreedsViewModel
+import com.kodeco.android.dogbreedsapp.presentation.viewModel.DislikedBreedsViewModel
+import com.kodeco.android.dogbreedsapp.presentation.viewModel.LikedBreedsViewModel
+import kotlinx.coroutines.Dispatchers
+import org.koin.android.ext.koin.androidContext
+import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.dsl.module
+
+val appModules = module {
+  single {
+    Room.databaseBuilder(
+      context = androidContext(),
+      DogsDatabase::class.java,
+      "Dog_breeds_database",
+    )
+      .build()}
+  single {
+     get<DogsDatabase>().breedsDao()
   }
+  single { provideOkHttpClient() }
+  single { provideRetrofit(get()) }
+  single { provideBreedsApi(get()) }
+  factory<BreedRepository> { BreedRepositoryImpl(get(), get()) }
+  single { Dispatchers.IO }
+  viewModel { BreedsViewModel(get(), get()) }
+  viewModel { BreedDetailViewModel(get()) }
+  viewModel { LikedBreedsViewModel(get()) }
+  viewModel { DislikedBreedsViewModel(get()) }
+
 }

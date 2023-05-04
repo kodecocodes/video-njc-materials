@@ -31,20 +31,21 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-package com.kodeco.android.dogbreedsapp.presentation.view.screens
+package com.kodeco.android.dogbreedsapp.data.network.model
 
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Scaffold
-import androidx.compose.runtime.Composable
-import androidx.navigation.compose.rememberNavController
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun MainScreen() {
-  val navController = rememberNavController()
-  Scaffold(
-    bottomBar = {{/*TODO: Add bottom navigation bar]*/}}
-  ) { paddingValues->
-    // TODO: Call BreedsNavHost composable
-  }
-}
+data class BreedNetworkResponseItem(
+  val bred_for: String?,
+  val breed_group: String?,
+  val country_code: String?,
+  val description: String?,
+  val height: Height?,
+  val history: String?,
+  val id: Int?,
+  val image: Image?,
+  val life_span: String?,
+  val name: String?,
+  val origin: String?,
+  val reference_image_id: String?,
+  val temperament: String?,
+  val weight: Weight?
+)

@@ -33,18 +33,58 @@
 */
 package com.kodeco.android.dogbreedsapp.presentation.view.screens
 
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.navigation.compose.rememberNavController
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.Modifier
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.kodeco.android.dogbreedsapp.presentation.models.BreedDetailAction
+import com.kodeco.android.dogbreedsapp.presentation.models.BreedDetailUiState
+import com.kodeco.android.dogbreedsapp.presentation.view.components.BreedDetailComponent
+import com.kodeco.android.dogbreedsapp.presentation.view.components.ErrorComponent
+import com.kodeco.android.dogbreedsapp.presentation.viewModel.BreedDetailViewModel
+import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen() {
-  val navController = rememberNavController()
+fun BreedDetailScreen(breedId: Int, breedDetailViewModel: BreedDetailViewModel = koinViewModel()) {
+  LaunchedEffect(key1 = true) {
+    breedDetailViewModel.uiActions.send(BreedDetailAction.GetBreedById(breedId = breedId))
+  }
+
+  LaunchedEffect(key1 = breedDetailViewModel.uiActions) {
+    breedDetailViewModel.handleActions()
+  }
+
+  val uiState = breedDetailViewModel.breedDetailUiState.collectAsStateWithLifecycle().value
   Scaffold(
-    bottomBar = {{/*TODO: Add bottom navigation bar]*/}}
-  ) { paddingValues->
-    // TODO: Call BreedsNavHost composable
+
+  ) { paddingValues ->
+    when (uiState) {
+      is BreedDetailUiState.Error -> {}
+      is BreedDetailUiState.Loading -> {
+        LinearProgressIndicator()
+      }
+
+      is BreedDetailUiState.Data -> {
+        BreedDetailComponent(
+          modifier = Modifier.padding(paddingValues),
+          breed = uiState.breed,
+          onLikeClicked = {
+
+          },
+          onDislikeClicked = {
+
+          },
+        )
+      }
+      is BreedDetailUiState.Empty -> {
+        ErrorComponent(message = uiState.message, retry = {})
+      }
+    }
+
   }
 }

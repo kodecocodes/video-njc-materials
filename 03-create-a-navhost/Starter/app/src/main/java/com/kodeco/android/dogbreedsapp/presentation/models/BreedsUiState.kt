@@ -31,20 +31,32 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-package com.kodeco.android.dogbreedsapp.presentation.view.screens
 
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Scaffold
-import androidx.compose.runtime.Composable
-import androidx.navigation.compose.rememberNavController
+package com.kodeco.android.dogbreedsapp.presentation.models
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun MainScreen() {
-  val navController = rememberNavController()
-  Scaffold(
-    bottomBar = {{/*TODO: Add bottom navigation bar]*/}}
-  ) { paddingValues->
-    // TODO: Call BreedsNavHost composable
-  }
+import com.kodeco.android.dogbreedsapp.domain.model.Breed
+
+
+
+sealed interface BreedsUiState {
+  object Loading : BreedsUiState
+  data class Data(val breeds: List<Breed>) : BreedsUiState
+  @JvmInline
+  value class Error(val message: String) : BreedsUiState
+
+  @JvmInline
+  value class Empty(val message: String = "Whoops! No breeds found"): BreedsUiState
+}
+
+
+sealed class BreedAction(){
+  object GetBreeds: BreedAction()
+  object Retry: BreedAction()
+
+  data class LikeBreed(val updatedBreed: Breed): BreedAction()
+
+  data class DislikeBreed(val updatedBreed: Breed): BreedAction()
+
+
+
 }

@@ -31,20 +31,41 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-package com.kodeco.android.dogbreedsapp.presentation.view.screens
 
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Scaffold
+package com.kodeco.android.dogbreedsapp.presentation.view.components
+
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.runtime.Composable
-import androidx.navigation.compose.rememberNavController
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import com.kodeco.android.dogbreedsapp.domain.model.Breed
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen() {
-  val navController = rememberNavController()
-  Scaffold(
-    bottomBar = {{/*TODO: Add bottom navigation bar]*/}}
-  ) { paddingValues->
-    // TODO: Call BreedsNavHost composable
+fun BreedsListComponent(
+  breeds: List<Breed>,
+  modifier: Modifier,
+  onBreedLiked: (Breed) -> Unit,
+  onBreedDisliked: (Breed) -> Unit,
+  navigateToDetailScreen: (Int)-> Unit
+) {
+  LazyVerticalGrid(
+    modifier = modifier,
+    columns = GridCells.Adaptive(128.dp),
+    contentPadding = PaddingValues(16.dp),
+    verticalArrangement = Arrangement.spacedBy(16.dp),
+    horizontalArrangement = Arrangement.spacedBy(16.dp)
+  ) {
+    items(breeds, key = { breed -> breed.id }) { breed ->
+      BreedComponent(
+        breed = breed,
+        onDislikeClicked = onBreedDisliked,
+        onLikeClicked = onBreedLiked,
+        navigateToDetailsScreen = navigateToDetailScreen
+      )
+    }
   }
 }

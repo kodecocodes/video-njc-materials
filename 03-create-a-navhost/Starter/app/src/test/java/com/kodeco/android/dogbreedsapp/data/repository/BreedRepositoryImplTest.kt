@@ -31,20 +31,42 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-package com.kodeco.android.dogbreedsapp.presentation.view.screens
 
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Scaffold
-import androidx.compose.runtime.Composable
-import androidx.navigation.compose.rememberNavController
+package com.kodeco.android.dogbreedsapp.data.repository
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun MainScreen() {
-  val navController = rememberNavController()
-  Scaffold(
-    bottomBar = {{/*TODO: Add bottom navigation bar]*/}}
-  ) { paddingValues->
-    // TODO: Call BreedsNavHost composable
+import com.google.common.truth.Truth.assertThat
+import com.kodeco.android.dogbreedsapp.data.util.breedEntityList
+import com.kodeco.android.dogbreedsapp.data.util.fakes.FakeBreedApi
+import com.kodeco.android.dogbreedsapp.data.util.fakes.FakeBreedsDao
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.test.runTest
+import org.junit.Test
+
+class BreedRepositoryImplTest {
+  private val breedApi = FakeBreedApi()
+  private val breedsDao = FakeBreedsDao()
+  private val breedRepository = BreedRepositoryImpl(breedApi, breedsDao = breedsDao)
+
+  @Test
+  fun `test save breeds locally when successfully fetched from the API`() = runTest{
+    // Act
+    breedRepository.fetchBreedsFromApi()
+    val breeds = breedsDao.getDogBreeds().first()
+    // Assert
+    assertThat(breeds.size).isEqualTo(7)
+    assertThat(breeds[0].name).isEqualTo("Affenpinscher")
   }
+
+  @Test
+  fun `test get breeds returns list of breeds saved locally`() = runTest{
+    // Arrange
+    breedsDao.saveBreeds(breedEntityList)
+    // Act
+    val breeds = breedRepository.getAllBreeds().first()
+    // Assert
+    assertThat(breeds.size).isEqualTo(5)
+    assertThat(breeds[0].name).isEqualTo("Affenpinscher")
+  }
+
+
 }

@@ -31,20 +31,33 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-package com.kodeco.android.dogbreedsapp.presentation.view.screens
 
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Scaffold
-import androidx.compose.runtime.Composable
-import androidx.navigation.compose.rememberNavController
+package com.kodeco.android.dogbreedsapp.data.network
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun MainScreen() {
-  val navController = rememberNavController()
-  Scaffold(
-    bottomBar = {{/*TODO: Add bottom navigation bar]*/}}
-  ) { paddingValues->
-    // TODO: Call BreedsNavHost composable
-  }
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Retrofit
+import retrofit2.converter.moshi.MoshiConverterFactory
+
+const val BASE_URL = "https://api.thedogapi.com/v1/"
+
+val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
+fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
+  return Retrofit.Builder()
+    .baseUrl(BASE_URL)
+    .addConverterFactory(MoshiConverterFactory.create(moshi))
+    .client(okHttpClient)
+    .build()
+}
+
+fun provideBreedsApi(retrofit: Retrofit): BreedsApi = retrofit.create(BreedsApi::class.java)
+
+fun provideOkHttpClient(): OkHttpClient {
+  return OkHttpClient().newBuilder().addInterceptor(loggingInterceptor).build()
+}
+
+val loggingInterceptor = HttpLoggingInterceptor().apply {
+  setLevel(HttpLoggingInterceptor.Level.BODY)
 }

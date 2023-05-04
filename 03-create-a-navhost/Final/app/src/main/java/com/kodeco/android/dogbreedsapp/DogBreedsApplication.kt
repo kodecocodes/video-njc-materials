@@ -31,20 +31,30 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-package com.kodeco.android.dogbreedsapp.presentation.view.screens
 
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Scaffold
-import androidx.compose.runtime.Composable
-import androidx.navigation.compose.rememberNavController
+package com.kodeco.android.dogbreedsapp
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun MainScreen() {
-  val navController = rememberNavController()
-  Scaffold(
-    bottomBar = {{/*TODO: Add bottom navigation bar]*/}}
-  ) { paddingValues->
-    // TODO: Call BreedsNavHost composable
+import android.app.Application
+import com.kodeco.android.dogbreedsapp.di.appModules
+import logcat.AndroidLogcatLogger
+import logcat.LogPriority
+import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidLogger
+import org.koin.core.context.startKoin
+
+class DogBreedsApplication : Application() {
+
+  override fun onCreate() {
+    super.onCreate()
+    // Start koin
+    startKoin {
+      androidLogger()
+      androidContext(this@DogBreedsApplication)
+      modules(appModules)
+    }
+
+    // Install AndroidLogcatLogger in debug builds
+    AndroidLogcatLogger.installOnDebuggableApp(this, minPriority = LogPriority.DEBUG)
+
   }
 }

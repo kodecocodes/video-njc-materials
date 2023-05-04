@@ -31,20 +31,32 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-package com.kodeco.android.dogbreedsapp.presentation.view.screens
+package com.kodeco.android.dogbreedsapp.data.local.dao
 
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Scaffold
-import androidx.compose.runtime.Composable
-import androidx.navigation.compose.rememberNavController
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.Query
+import androidx.room.Update
+import com.kodeco.android.dogbreedsapp.data.local.model.BreedEntity
+import kotlinx.coroutines.flow.Flow
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun MainScreen() {
-  val navController = rememberNavController()
-  Scaffold(
-    bottomBar = {{/*TODO: Add bottom navigation bar]*/}}
-  ) { paddingValues->
-    // TODO: Call BreedsNavHost composable
-  }
+@Dao
+interface BreedsDao {
+  @Insert
+  suspend fun saveBreeds(breeds: List<BreedEntity>)
+
+  @Query("SELECT * FROM breeds")
+  fun getDogBreeds(): Flow<List<BreedEntity>>
+
+  @Update
+  fun updateBreed(breed: BreedEntity): Int
+
+  @Query("SELECT * FROM breeds WHERE isLiked = 1")
+  fun fetchLikedBreeds(): Flow<List<BreedEntity>>
+
+  @Query("SELECT * FROM breeds WHERE isDisliked = 1")
+  fun fetchDisLikedBreeds(): Flow<List<BreedEntity>>
+
+  @Query("SELECT * FROM breeds WHERE id = :breedId")
+  fun getBreedById(breedId: Int): Flow<BreedEntity?>
 }

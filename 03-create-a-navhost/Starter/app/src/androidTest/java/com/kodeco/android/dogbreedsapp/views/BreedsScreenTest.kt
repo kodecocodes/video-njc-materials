@@ -31,20 +31,60 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-package com.kodeco.android.dogbreedsapp.presentation.view.screens
 
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Scaffold
-import androidx.compose.runtime.Composable
-import androidx.navigation.compose.rememberNavController
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun MainScreen() {
-  val navController = rememberNavController()
-  Scaffold(
-    bottomBar = {{/*TODO: Add bottom navigation bar]*/}}
-  ) { paddingValues->
-    // TODO: Call BreedsNavHost composable
+package com.kodeco.android.dogbreedsapp.views
+
+import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.hasContentDescription
+import androidx.compose.ui.test.hasParent
+import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.onNodeWithContentDescription
+import androidx.compose.ui.test.onRoot
+import androidx.compose.ui.test.printToLog
+import com.kodeco.android.dogbreedsapp.domain.model.Breed
+import com.kodeco.android.dogbreedsapp.presentation.view.components.BreedComponent
+import com.kodeco.android.dogbreedsapp.presentation.view.screens.BreedsScreen
+import org.junit.After
+import org.junit.Rule
+import org.junit.Test
+import org.koin.core.context.stopKoin
+
+class BreedsScreenTest {
+
+  @get:Rule
+  val composeTestRule = createComposeRule()
+
+
+  @After
+  fun tearDown(){
+    stopKoin()
+  }
+  @Test
+  fun testToolbarIsDisplayed() {
+    composeTestRule.setContent {
+      BreedsScreen()
+    }
+
+    composeTestRule.onNodeWithContentDescription("BreedsToolbar").assertIsDisplayed()
+  }
+
+  @Test
+  fun testBreedComponentIsDisplayed() {
+    composeTestRule.setContent {
+      BreedComponent(breed = Breed())
+    }
+    composeTestRule.onRoot(useUnmergedTree = true).printToLog("BreedComponentTest")
+    composeTestRule.onNode(hasContentDescription("clickableImage") and hasParent(
+      hasContentDescription("BreedComponent")) , useUnmergedTree = true)
+
+    composeTestRule.onNode(hasContentDescription("likeIcon") and hasParent(
+      hasContentDescription("BreedComponent")) , useUnmergedTree = true)
+
+    composeTestRule.onNode(hasContentDescription("dislikeIcon") and hasParent(
+      hasContentDescription("BreedComponent")) , useUnmergedTree = true)
+
+
+
   }
 }

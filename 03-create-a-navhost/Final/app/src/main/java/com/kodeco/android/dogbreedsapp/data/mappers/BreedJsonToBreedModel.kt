@@ -31,20 +31,18 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-package com.kodeco.android.dogbreedsapp.presentation.view.screens
 
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Scaffold
-import androidx.compose.runtime.Composable
-import androidx.navigation.compose.rememberNavController
+package com.kodeco.android.dogbreedsapp.data.mappers
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun MainScreen() {
-  val navController = rememberNavController()
-  Scaffold(
-    bottomBar = {{/*TODO: Add bottom navigation bar]*/}}
-  ) { paddingValues->
-    // TODO: Call BreedsNavHost composable
-  }
+import com.kodeco.android.dogbreedsapp.data.local.model.BreedEntity
+import com.kodeco.android.dogbreedsapp.data.network.model.BreedNetworkResponseItem
+import com.kodeco.android.dogbreedsapp.domain.model.Breed
+
+fun BreedNetworkResponseItem.toEntity(): BreedEntity {
+  return BreedEntity(
+    name = this.name ?: "Affenpinscher",
+    origin = this.origin ?: "Germany, France",
+    temperament = this.temperament ?: "stubborn, Curious, Playful, Adventurous, Active, Fun-loving",
+    imageUrl = this.image?.url ?: "https://cdn2.thedogapi.com/images/BJa4kxc4X.jpg",
+  )
 }
