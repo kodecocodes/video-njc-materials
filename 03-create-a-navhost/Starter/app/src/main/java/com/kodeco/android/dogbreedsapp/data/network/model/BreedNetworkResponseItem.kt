@@ -33,6 +33,8 @@
 */
 package com.kodeco.android.dogbreedsapp.data.network.model
 
+import com.kodeco.android.dogbreedsapp.data.local.model.BreedEntity
+
 data class BreedNetworkResponseItem(
   val bred_for: String?,
   val breed_group: String?,
@@ -49,3 +51,12 @@ data class BreedNetworkResponseItem(
   val temperament: String?,
   val weight: Weight?
 )
+
+fun BreedNetworkResponseItem.toEntity(): BreedEntity {
+  return BreedEntity(
+    name = this.name ?: "Affenpinscher",
+    origin = this.origin ?: "Germany, France",
+    temperament = this.temperament ?: "stubborn, Curious, Playful, Adventurous, Active, Fun-loving",
+    imageUrl = this.image?.url ?: "https://cdn2.thedogapi.com/images/BJa4kxc4X.jpg",
+  )
+}

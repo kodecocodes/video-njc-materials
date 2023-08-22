@@ -34,15 +34,17 @@
 
 package com.kodeco.android.dogbreedsapp.data.mappers
 
-import com.kodeco.android.dogbreedsapp.data.local.model.BreedEntity
-import com.kodeco.android.dogbreedsapp.data.network.model.BreedNetworkResponseItem
-import com.kodeco.android.dogbreedsapp.domain.model.Breed
+import com.google.common.truth.Truth.assertThat
+import com.kodeco.android.dogbreedsapp.data.network.model.toEntity
+import com.kodeco.android.dogbreedsapp.data.util.breedNetworkResponse
+import com.kodeco.android.dogbreedsapp.data.util.breedEntity
+import org.junit.Test
 
-fun BreedNetworkResponseItem.toEntity(): BreedEntity {
-  return BreedEntity(
-    name = this.name ?: "Affenpinscher",
-    origin = this.origin ?: "Germany, France",
-    temperament = this.temperament ?: "stubborn, Curious, Playful, Adventurous, Active, Fun-loving",
-    imageUrl = this.image?.url ?: "https://cdn2.thedogapi.com/images/BJa4kxc4X.jpg",
-  )
+class MappersTest {
+  @Test
+  fun `test should map json to Breed domain model`() {
+    val breed = breedNetworkResponse.toEntity()
+    assertThat(breed).isEqualTo(breedEntity)
+  }
+
 }
