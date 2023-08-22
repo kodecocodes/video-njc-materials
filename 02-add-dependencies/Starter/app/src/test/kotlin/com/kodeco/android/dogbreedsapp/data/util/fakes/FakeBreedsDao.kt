@@ -41,7 +41,7 @@ import kotlinx.coroutines.flow.flowOf
 
 class FakeBreedsDao: BreedsDao {
 
-  override suspend fun saveBreeds(breeds: List<BreedEntity>) {
+  override fun saveBreeds(breeds: List<BreedEntity>) {
       testBreedsList = breeds
   }
 
