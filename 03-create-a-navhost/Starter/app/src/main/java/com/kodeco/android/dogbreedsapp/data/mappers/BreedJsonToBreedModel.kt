@@ -32,71 +32,17 @@
 * THE SOFTWARE.
 */
 
-package com.kodeco.android.dogbreedsapp.data.util
+package com.kodeco.android.dogbreedsapp.data.mappers
 
 import com.kodeco.android.dogbreedsapp.data.local.model.BreedEntity
-import com.kodeco.android.dogbreedsapp.data.local.model.toBreed
 import com.kodeco.android.dogbreedsapp.data.network.model.BreedNetworkResponseItem
-import com.kodeco.android.dogbreedsapp.data.network.model.Image
+import com.kodeco.android.dogbreedsapp.domain.model.Breed
 
-val breedNetworkResponse = BreedNetworkResponseItem(
-  bred_for = "Small rodent hunting, lapdog",
-  breed_group = "Tay",
-  name = "Affenpinscher",
-  life_span = "10 - 12 years",
-  image = Image(
-    id = "BJa4kxc4X",
-    height = 1600,
-    width = 1199,
-    url = "https://cdn2.thedogapi.com/images/BJa4kxc4X.jpg"
-  ),
-  origin = "Germany, France",
-  reference_image_id = "BJa4kxc4X",
-  temperament = "Stubborn, Curious, Playful, Adventurous, Active, Fun-loving",
-  weight = null,
-  height = null,
-  id = 1,
-  country_code = null,
-  description = null,
-  history = null,
-)
-val breedEntity = BreedEntity(
-  name = "Affenpinscher",
-  temperament = "Stubborn, Curious, Playful, Adventurous, Active, Fun-loving",
-  origin = "Germany, France",
-  imageUrl = "https://cdn2.thedogapi.com/images/BJa4kxc4X.jpg",
-  isLiked = false,
-  isDisliked = false
-)
-
-val breed = breedEntity.toBreed()
-
-val breedsList = listOf(
-  breed,
-  breed,
-  breed,
-  breed
-)
-
-
-
-val breedsResponseList = listOf(
-  breedNetworkResponse,
-  breedNetworkResponse,
-  breedNetworkResponse,
-  breedNetworkResponse,
-  breedNetworkResponse,
-  breedNetworkResponse,
-  breedNetworkResponse
-)
-
-
-val breedEntityList = listOf(
-  breedEntity,
-  breedEntity,
-  breedEntity,
-  breedEntity,
-  breedEntity
-)
-
-var testBreedsList  = emptyList<BreedEntity>()
+fun BreedNetworkResponseItem.toEntity(): BreedEntity {
+  return BreedEntity(
+    name = this.name ?: "Affenpinscher",
+    origin = this.origin ?: "Germany, France",
+    temperament = this.temperament ?: "stubborn, Curious, Playful, Adventurous, Active, Fun-loving",
+    imageUrl = this.image?.url ?: "https://cdn2.thedogapi.com/images/BJa4kxc4X.jpg",
+  )
+}

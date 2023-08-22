@@ -37,8 +37,8 @@ package com.kodeco.android.dogbreedsapp.data.repository
 import com.kodeco.android.dogbreedsapp.data.local.dao.BreedsDao
 import com.kodeco.android.dogbreedsapp.data.local.model.BreedEntity
 import com.kodeco.android.dogbreedsapp.data.local.model.toBreed
+import com.kodeco.android.dogbreedsapp.data.mappers.toEntity
 import com.kodeco.android.dogbreedsapp.data.network.BreedsApi
-import com.kodeco.android.dogbreedsapp.data.network.model.toEntity
 import com.kodeco.android.dogbreedsapp.data.network.safeApiCall
 import com.kodeco.android.dogbreedsapp.domain.model.Breed
 import com.kodeco.android.dogbreedsapp.domain.model.toEntity

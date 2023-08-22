@@ -37,6 +37,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Scaffold
@@ -62,6 +63,7 @@ import com.kodeco.android.dogbreedsapp.presentation.view.components.BreedsListCo
 import com.kodeco.android.dogbreedsapp.presentation.view.components.ErrorComponent
 import com.kodeco.android.dogbreedsapp.presentation.viewModel.LikedBreedsViewModel
 import kotlinx.coroutines.launch
+import logcat.logcat
 import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)

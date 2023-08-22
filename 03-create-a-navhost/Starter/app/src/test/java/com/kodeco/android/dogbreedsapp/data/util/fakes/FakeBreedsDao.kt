@@ -31,29 +31,35 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
+package com.kodeco.android.dogbreedsapp.data.util.fakes
 
-package com.kodeco.android.dogbreedsapp.presentation.models
+import com.kodeco.android.dogbreedsapp.data.local.dao.BreedsDao
+import com.kodeco.android.dogbreedsapp.data.local.model.BreedEntity
+import com.kodeco.android.dogbreedsapp.data.util.testBreedsList
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 
-import com.kodeco.android.dogbreedsapp.domain.model.Breed
+class FakeBreedsDao: BreedsDao {
 
+  override suspend fun saveBreeds(breeds: List<BreedEntity>) {
+      testBreedsList = breeds
+  }
 
+  override fun getDogBreeds() = flowOf(testBreedsList)
+  override fun updateBreed(breed: BreedEntity): Int{
+    TODO("Not yet implemented")
+  }
 
-sealed interface BreedsUiState {
-  object Loading : BreedsUiState
-  data class Data(val breeds: List<Breed>) : BreedsUiState
-  @JvmInline
-  value class Error(val message: String) : BreedsUiState
+  override fun fetchLikedBreeds(): Flow<List<BreedEntity>> {
+    TODO("Not yet implemented")
+  }
 
-  @JvmInline
-  value class Empty(val message: String = "Whoops! No breeds found"): BreedsUiState
-}
+  override fun fetchDisLikedBreeds(): Flow<List<BreedEntity>> {
+    TODO("Not yet implemented")
+  }
 
+  override fun getBreedById(breedId: Int): Flow<BreedEntity?> {
+    TODO("Not yet implemented")
+  }
 
-sealed class BreedAction(){
-  object GetBreeds: BreedAction()
-  object Retry: BreedAction()
-
-  data class LikeBreed(val updatedBreed: Breed): BreedAction()
-
-  data class DislikeBreed(val updatedBreed: Breed): BreedAction()
 }

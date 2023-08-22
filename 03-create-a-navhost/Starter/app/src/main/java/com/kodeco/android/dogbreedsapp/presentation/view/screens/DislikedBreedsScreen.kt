@@ -59,6 +59,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.kodeco.android.dogbreedsapp.presentation.models.BreedAction
 import com.kodeco.android.dogbreedsapp.presentation.models.BreedsUiState
 import com.kodeco.android.dogbreedsapp.presentation.view.components.BreedsListComponent
+import com.kodeco.android.dogbreedsapp.presentation.view.components.ErrorComponent
+import com.kodeco.android.dogbreedsapp.presentation.viewModel.BreedsViewModel
 import com.kodeco.android.dogbreedsapp.presentation.viewModel.DislikedBreedsViewModel
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel

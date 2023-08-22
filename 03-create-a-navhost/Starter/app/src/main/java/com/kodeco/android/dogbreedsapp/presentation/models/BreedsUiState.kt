@@ -36,6 +36,8 @@ package com.kodeco.android.dogbreedsapp.presentation.models
 
 import com.kodeco.android.dogbreedsapp.domain.model.Breed
 
+
+
 sealed interface BreedsUiState {
   object Loading : BreedsUiState
   data class Data(val breeds: List<Breed>) : BreedsUiState

@@ -43,7 +43,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface BreedsDao {
   @Insert
-  fun saveBreeds(breeds: List<BreedEntity>)
+  suspend fun saveBreeds(breeds: List<BreedEntity>)
 
   @Query("SELECT * FROM breeds")
   fun getDogBreeds(): Flow<List<BreedEntity>>

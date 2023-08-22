@@ -31,35 +31,19 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
-package com.kodeco.android.dogbreedsapp.data.util.fakes
 
-import com.kodeco.android.dogbreedsapp.data.local.dao.BreedsDao
-import com.kodeco.android.dogbreedsapp.data.local.model.BreedEntity
-import com.kodeco.android.dogbreedsapp.data.util.testBreedsList
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
+package com.kodeco.android.dogbreedsapp.data.mappers
 
-class FakeBreedsDao: BreedsDao {
+import com.google.common.truth.Truth.assertThat
+import com.kodeco.android.dogbreedsapp.data.util.breedNetworkResponse
+import com.kodeco.android.dogbreedsapp.data.util.breedEntity
+import org.junit.Test
 
-  override fun saveBreeds(breeds: List<BreedEntity>) {
-      testBreedsList = breeds
-  }
-
-  override fun getDogBreeds() = flowOf(testBreedsList)
-  override fun updateBreed(breed: BreedEntity): Int{
-    TODO("Not yet implemented")
-  }
-
-  override fun fetchLikedBreeds(): Flow<List<BreedEntity>> {
-    TODO("Not yet implemented")
-  }
-
-  override fun fetchDisLikedBreeds(): Flow<List<BreedEntity>> {
-    TODO("Not yet implemented")
-  }
-
-  override fun getBreedById(breedId: Int): Flow<BreedEntity?> {
-    TODO("Not yet implemented")
+class MappersTest {
+  @Test
+  fun `test should map json to Breed domain model`() {
+    val breed = breedNetworkResponse.toEntity()
+    assertThat(breed).isEqualTo(breedEntity)
   }
 
 }

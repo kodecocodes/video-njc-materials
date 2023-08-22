@@ -31,29 +31,24 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
+package com.kodeco.android.dogbreedsapp.presentation.view.navigation
 
-package com.kodeco.android.dogbreedsapp.presentation.models
+import androidx.compose.runtime.Composable
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import com.kodeco.android.dogbreedsapp.presentation.view.screens.BreedsScreen
 
-import com.kodeco.android.dogbreedsapp.domain.model.Breed
-
-
-
-sealed interface BreedsUiState {
-  object Loading : BreedsUiState
-  data class Data(val breeds: List<Breed>) : BreedsUiState
-  @JvmInline
-  value class Error(val message: String) : BreedsUiState
-
-  @JvmInline
-  value class Empty(val message: String = "Whoops! No breeds found"): BreedsUiState
+@Composable
+fun BreedsNavHost(
+  navController: NavHostController,
+) {
+  NavHost(navController = navController, startDestination = "Breeds") {
+    composable(route = "Breeds" ){
+      BreedsScreen()
+    }
+  }
 }
 
 
-sealed class BreedAction(){
-  object GetBreeds: BreedAction()
-  object Retry: BreedAction()
 
-  data class LikeBreed(val updatedBreed: Breed): BreedAction()
-
-  data class DislikeBreed(val updatedBreed: Breed): BreedAction()
-}
