@@ -35,6 +35,7 @@
 package com.kodeco.android.dogbreedsapp.data.mappers
 
 import com.google.common.truth.Truth.assertThat
+import com.kodeco.android.dogbreedsapp.data.network.model.toEntity
 import com.kodeco.android.dogbreedsapp.data.util.breedNetworkResponse
 import com.kodeco.android.dogbreedsapp.data.util.breedEntity
 import org.junit.Test

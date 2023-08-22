@@ -32,8 +32,6 @@
 * THE SOFTWARE.
 */
 
-
-
 package com.kodeco.android.dogbreedsapp.presentation
 
 import android.os.Bundle
@@ -43,8 +41,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import com.kodeco.android.dogbreedsapp.presentation.view.screens.MainScreen
 import com.kodeco.android.dogbreedsapp.presentation.view.theme.DogBreedsAppTheme
+import com.kodeco.android.dogbreedsapp.presentation.view.screens.MainScreen
 
 class MainActivity : ComponentActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {

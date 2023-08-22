@@ -43,8 +43,8 @@ import androidx.navigation.compose.rememberNavController
 fun MainScreen() {
   val navController = rememberNavController()
   Scaffold(
-    bottomBar = {{/*TODO: Add bottom navigation bar]*/}}
-  ) { paddingValues->
+    bottomBar = {/*TODO: Add bottom navigation bar]*/ }
+  ) { paddingValue ->
     // TODO: Call BreedsNavHost composable
   }
 }

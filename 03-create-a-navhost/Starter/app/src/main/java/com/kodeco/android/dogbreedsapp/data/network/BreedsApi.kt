@@ -36,7 +36,6 @@ package com.kodeco.android.dogbreedsapp.data.network
 
 import com.kodeco.android.dogbreedsapp.data.network.model.BreedNetworkResponseItem
 import retrofit2.http.GET
-import retrofit2.http.Query
 
 interface BreedsApi {
   @GET("breeds?limit=20")

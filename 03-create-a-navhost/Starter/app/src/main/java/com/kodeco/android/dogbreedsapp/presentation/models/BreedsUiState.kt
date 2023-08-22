@@ -56,7 +56,4 @@ sealed class BreedAction(){
   data class LikeBreed(val updatedBreed: Breed): BreedAction()
 
   data class DislikeBreed(val updatedBreed: Breed): BreedAction()
-
-
-
 }

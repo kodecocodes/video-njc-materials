@@ -69,17 +69,6 @@ val breedEntity = BreedEntity(
   isDisliked = false
 )
 
-val breed = breedEntity.toBreed()
-
-val breedsList = listOf(
-  breed,
-  breed,
-  breed,
-  breed
-)
-
-
-
 val breedsResponseList = listOf(
   breedNetworkResponse,
   breedNetworkResponse,
